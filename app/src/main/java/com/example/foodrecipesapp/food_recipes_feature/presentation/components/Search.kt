@@ -36,10 +36,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Constants.Companion.MEAL_ID
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Constants.Companion.MEAL_NAME
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Constants.Companion.MEAL_THUMB
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Resource
+import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_ID
+import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_NAME
+import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_THUMB
+import com.example.foodrecipesapp.utils.Resource
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Meal
 import com.example.foodrecipesapp.food_recipes_feature.presentation.activities.MealDetails
 import com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels.HomeViewModel

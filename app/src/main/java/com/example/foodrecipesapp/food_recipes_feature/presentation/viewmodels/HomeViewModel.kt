@@ -3,7 +3,7 @@ package com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Resource
+import com.example.foodrecipesapp.utils.Resource
 import com.example.foodrecipesapp.food_recipes_feature.data.models.CategoryList
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Meal
 import com.example.foodrecipesapp.food_recipes_feature.data.models.MealList

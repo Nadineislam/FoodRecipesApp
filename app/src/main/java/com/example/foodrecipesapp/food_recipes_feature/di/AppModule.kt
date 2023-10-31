@@ -2,7 +2,7 @@ package com.example.foodrecipesapp.food_recipes_feature.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Constants.Companion.API_KEY
+import com.example.foodrecipesapp.utils.Constants.Companion.API_KEY
 import com.example.foodrecipesapp.food_recipes_feature.data.api.ApiService
 import com.example.foodrecipesapp.food_recipes_feature.data.db.MealDao
 import com.example.foodrecipesapp.food_recipes_feature.data.db.MealDatabase

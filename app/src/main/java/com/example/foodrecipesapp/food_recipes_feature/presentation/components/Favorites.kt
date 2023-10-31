@@ -36,9 +36,9 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.asFlow
 import coil.compose.rememberImagePainter
 import com.example.foodrecipesapp.R
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Constants.Companion.MEAL_ID
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Constants.Companion.MEAL_NAME
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Constants.Companion.MEAL_THUMB
+import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_ID
+import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_NAME
+import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_THUMB
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Meal
 import com.example.foodrecipesapp.food_recipes_feature.presentation.activities.MealDetails
 import com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels.HomeViewModel

@@ -2,7 +2,7 @@ package com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Resource
+import com.example.foodrecipesapp.utils.Resource
 import com.example.foodrecipesapp.food_recipes_feature.data.models.MealsByCategoryList
 import com.example.foodrecipesapp.food_recipes_feature.data.repository.MealsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

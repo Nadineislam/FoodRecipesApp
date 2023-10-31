@@ -39,10 +39,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberImagePainter
 import com.example.foodrecipesapp.R
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Constants.Companion.MEAL_ID
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Constants.Companion.MEAL_NAME
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Constants.Companion.MEAL_THUMB
-import com.example.foodrecipesapp.food_recipes_feature.core.utils.Resource
+import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_ID
+import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_NAME
+import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_THUMB
+import com.example.foodrecipesapp.utils.Resource
 import com.example.foodrecipesapp.food_recipes_feature.data.models.MealsByCategory
 import com.example.foodrecipesapp.food_recipes_feature.presentation.activities.ui.theme.FoodRecipesAppTheme
 import com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels.CategoryMealsViewModel

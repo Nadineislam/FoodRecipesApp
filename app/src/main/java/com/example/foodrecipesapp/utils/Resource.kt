@@ -1,4 +1,4 @@
-package com.example.foodrecipesapp.food_recipes_feature.core.utils
+package com.example.foodrecipesapp.utils
 
 sealed class Resource<T>(
     val data: T? = null,
