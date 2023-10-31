@@ -28,7 +28,6 @@
         <activity
             android:name=".food_recipes_feature.presentation.activities.MainActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.FoodRecipesApp">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
