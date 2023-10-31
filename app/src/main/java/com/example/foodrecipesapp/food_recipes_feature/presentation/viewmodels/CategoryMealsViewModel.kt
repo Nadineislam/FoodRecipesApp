@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foodrecipesapp.utils.Resource
 import com.example.foodrecipesapp.food_recipes_feature.data.models.MealsByCategoryList
-import com.example.foodrecipesapp.food_recipes_feature.data.repository.MealsRepository
+import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.MealsByCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CategoryMealsViewModel @Inject constructor(
-    private val mealRepository: MealsRepository
+    private val mealsByCategoryUseCase: MealsByCategoryUseCase
 ) :
     ViewModel() {
     private val _categoryMeals: MutableStateFlow<Resource<MealsByCategoryList>> =
@@ -23,7 +23,7 @@ class CategoryMealsViewModel @Inject constructor(
 
 
     fun getMealsByCategory(categoryName: String) = viewModelScope.launch {
-        val response = mealRepository.getMealsByCategory(categoryName)
+        val response = mealsByCategoryUseCase(categoryName)
         _categoryMeals.value = handleCategoryMealsLiveData(response)
 
     }

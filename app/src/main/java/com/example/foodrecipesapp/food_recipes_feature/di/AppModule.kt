@@ -6,6 +6,8 @@ import com.example.foodrecipesapp.utils.Constants.Companion.API_KEY
 import com.example.foodrecipesapp.food_recipes_feature.data.api.ApiService
 import com.example.foodrecipesapp.food_recipes_feature.data.db.MealDao
 import com.example.foodrecipesapp.food_recipes_feature.data.db.MealDatabase
+import com.example.foodrecipesapp.food_recipes_feature.data.repository.MealsRepositoryImpl
+import com.example.foodrecipesapp.food_recipes_feature.domain.repository.MealsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,6 +22,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object AppModule {
+    @Provides
+    @Singleton
+    fun provideMealsRepository(api:ApiService,db:MealDatabase):MealsRepository{
+        return MealsRepositoryImpl(db.mealDao(),api)
+    }
     @Provides
     @Singleton
     fun providesDatabase(@ApplicationContext context: Context): MealDatabase =

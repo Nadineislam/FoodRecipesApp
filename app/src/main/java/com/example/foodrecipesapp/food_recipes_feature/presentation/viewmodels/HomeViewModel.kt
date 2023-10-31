@@ -8,7 +8,12 @@ import com.example.foodrecipesapp.food_recipes_feature.data.models.CategoryList
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Meal
 import com.example.foodrecipesapp.food_recipes_feature.data.models.MealList
 import com.example.foodrecipesapp.food_recipes_feature.data.models.MealsByCategoryList
-import com.example.foodrecipesapp.food_recipes_feature.data.repository.MealsRepository
+import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.CategoriesUseCase
+import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.DeleteMealUseCase
+import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.MealsUseCase
+import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.PopularMealsUseCase
+import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.RandomMealUseCase
+import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.SearchMealUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -18,7 +23,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val mealRepository: MealsRepository
+    mealsUseCase: MealsUseCase,
+    private val randomMealUseCase: RandomMealUseCase,
+    private val popularMealsUseCase: PopularMealsUseCase,
+    private val categoriesUseCase: CategoriesUseCase,
+    private val searchMealUseCase: SearchMealUseCase,
+    private val deleteMealUseCase: DeleteMealUseCase
 ) : ViewModel() {
     private val _randomMeal: MutableStateFlow<Resource<Meal>> = MutableStateFlow(Resource.Loading())
     val randomMeal: StateFlow<Resource<Meal>> = _randomMeal
@@ -31,7 +41,7 @@ class HomeViewModel @Inject constructor(
         MutableStateFlow(Resource.Loading())
     val categories: StateFlow<Resource<CategoryList>> = _categories
 
-    private var favoritesMealsLiveData = mealRepository.getMeals()
+    private var favoritesMealsLiveData = mealsUseCase()
 
     private val _searchMeal = MutableStateFlow<Resource<MealList>>(Resource.Loading())
     val searchMeal: StateFlow<Resource<MealList>> = _searchMeal
@@ -43,7 +53,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getRandomMeal() = viewModelScope.launch {
-        val response = mealRepository.getRandomMeal()
+        val response = randomMealUseCase()
         if (response.isSuccessful) {
             val mealList = response.body()
             val randomMeal = mealList?.meals?.firstOrNull()
@@ -56,7 +66,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getCategories() = viewModelScope.launch {
-        val response = mealRepository.getCategory()
+        val response = categoriesUseCase()
         _categories.value = handleCategoriesResponse(response)
     }
 
@@ -70,7 +80,7 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun getPopularMeals() = viewModelScope.launch {
-        val response = mealRepository.getPopularMeals("Seafood")
+        val response = popularMealsUseCase("Seafood")
         _popularMeals.value = handlePopularMealsResponse(response)
     }
 
@@ -84,8 +94,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun searchMeal(searchQuery: String) = viewModelScope.launch {
-        _searchMeal.value = Resource.Loading()
-        val response = mealRepository.getMealsBySearch(searchQuery)
+        val response = searchMealUseCase(searchQuery)
         _searchMeal.value = handleSearchMealResponse(response)
     }
 
@@ -100,7 +109,7 @@ class HomeViewModel @Inject constructor(
 
     fun deleteMeal(meal: Meal) {
         viewModelScope.launch {
-            mealRepository.deleteMeal(meal)
+            deleteMealUseCase(meal)
         }
     }
 
