@@ -1,0 +1,29 @@
+package com.example.foodrecipesapp.food_recipes_feature.data.api
+
+import com.example.foodrecipesapp.food_recipes_feature.data.models.CategoryList
+import com.example.foodrecipesapp.food_recipes_feature.data.models.MealsByCategoryList
+import com.example.foodrecipesapp.food_recipes_feature.data.models.MealList
+import retrofit2.Response
+import retrofit2.http.GET
+import retrofit2.http.Query
+
+interface ApiService {
+
+    @GET("random.php")
+   suspend fun getRandomMeal(): Response<MealList>
+
+    @GET("lookup.php?")
+    suspend fun getMealDetails(@Query("i") id: String): Response<MealList>
+
+    @GET("filter.php")
+    suspend fun getPopularMeals(@Query("c") categoryName: String): Response<MealsByCategoryList>
+
+    @GET("categories.php")
+    suspend fun getCategory(): Response<CategoryList>
+
+    @GET("filter.php")
+    suspend fun getMealsByCategory(@Query("c") categoryName: String): Response<MealsByCategoryList>
+
+    @GET("search.php")
+    suspend fun getMealsBySearch(@Query("s") mealName: String): Response<MealList>
+}

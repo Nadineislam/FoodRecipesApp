@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:name=".food_recipes_feature.core.HiltApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.FoodRecipesApp"
+        tools:targetApi="31">
+        <activity
+            android:name=".food_recipes_feature.presentation.activities.CategoryMeals"
+            android:exported="false"
+            android:label="@string/title_activity_category_meals"
+            android:theme="@style/Theme.FoodRecipesApp" />
+        <activity
+            android:name=".food_recipes_feature.presentation.activities.MealDetails"
+            android:exported="false"
+            android:label="@string/title_activity_meal_details"
+            android:theme="@style/Theme.FoodRecipesApp" />
+        <activity
+            android:name=".food_recipes_feature.presentation.activities.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.FoodRecipesApp">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>
