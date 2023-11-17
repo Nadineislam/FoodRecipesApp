@@ -12,9 +12,7 @@ Food App has many meals recipes and instructions and you can know the country wh
 * Room : Save/Delete meals in local database. <br />
 * MVVM : Saperate logic code from views and save the state in case the screen configuration changes. <br />
 * Coroutines : do some code in the background. <br />
-* View Binding : instead of inflating views manually view binding will take care of that. <br />
-
-* Glide : Catch images and load them in imageView. <br />
+* Clean Architecture : For organizing code in a way that promotes separation of concerns. <br />
 
 * Dagger hilt : Dependency injection. <br />
 
