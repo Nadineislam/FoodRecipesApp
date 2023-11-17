@@ -10,9 +10,9 @@ Food App has many meals recipes and instructions and you can know the country wh
 * Retrofit : making HTTP connection with the rest API and convert meal json file to Kotlin/Java object. <br />
 * Room : Save/Delete meals in local database. <br />
 * MVVM : Saperate logic code from views and save the state in case the screen configuration changes. <br />
-* Coroutines : do some code in the background. <br />
+* Coroutines : do some long running operations in the background. <br />
 * Clean Architecture : For organizing code in a way that promotes separation of concerns. <br />
 
-* Dagger hilt : Dependency injection. <br />
+* Dagger hilt : For injecting the required dependencies. <br />
 
 * Jetpack Compose : For representing UI. <br />
