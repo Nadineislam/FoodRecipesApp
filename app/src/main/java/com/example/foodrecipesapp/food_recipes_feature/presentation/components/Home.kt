@@ -28,7 +28,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -41,6 +40,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
@@ -74,7 +74,7 @@ fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
 
 @Composable
 fun GetCategoriesMeal(viewModel: HomeViewModel) {
-    val categoryMeals by viewModel.categories.collectAsState()
+    val categoryMeals by viewModel.categories.collectAsStateWithLifecycle()
     when (val resource = categoryMeals) {
         is Resource.Loading -> {
             Box(
@@ -100,7 +100,7 @@ fun GetCategoriesMeal(viewModel: HomeViewModel) {
 
 @Composable
 fun GetPopularMeals(viewModel: HomeViewModel) {
-    val popularMealsState by viewModel.popularMeals.collectAsState()
+    val popularMealsState by viewModel.popularMeals.collectAsStateWithLifecycle()
     when (val resource = popularMealsState) {
         is Resource.Loading -> {
             Box(
@@ -158,7 +158,7 @@ fun TitleText(text: String) {
 
 @Composable
 fun GetRandomMeal(viewModel: HomeViewModel) {
-    val randomMeal = viewModel.randomMeal.collectAsState()
+    val randomMeal = viewModel.randomMeal.collectAsStateWithLifecycle()
     when (val resource = randomMeal.value) {
         is Resource.Success -> {
             val meal = resource.data
@@ -213,9 +213,6 @@ fun CategoriesMeal(categories: List<Category>) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-//                    val painter = rememberAsyncImagePainter(
-//                        model = category.strCategoryThumb
-//                    )
                         val painter: Painter = rememberImagePainter(
                             data = category.strCategoryThumb,
                             builder = {

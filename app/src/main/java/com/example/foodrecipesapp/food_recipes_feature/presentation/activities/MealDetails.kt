@@ -25,7 +25,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,10 +35,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.rememberAsyncImagePainter
 import com.example.foodrecipesapp.R
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_ID
@@ -66,7 +65,6 @@ class MealDetails : ComponentActivity() {
         viewModel.getMealDetails(mealId)
         setContent {
             FoodRecipesAppTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -82,7 +80,7 @@ var savedMeal: Meal? = null
 
 @Composable
 fun GetMealsDetails(mealName: String, mealThumb: String, viewModel: MealsViewModel) {
-    val mealDetails by viewModel.mealDetails.collectAsState()
+    val mealDetails by viewModel.mealDetails.collectAsStateWithLifecycle()
     when (val resource = mealDetails) {
         is Resource.Loading -> {
             Box(
