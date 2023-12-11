@@ -128,9 +128,6 @@ fun CategoryMealsItems(mealsByCategory: List<MealsByCategory>) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-//                    val painter = rememberAsyncImagePainter(
-//                        model = category.strCategoryThumb
-//                    )
                         val painter: Painter = rememberImagePainter(
                             data = category.strMealThumb,
                             builder = {

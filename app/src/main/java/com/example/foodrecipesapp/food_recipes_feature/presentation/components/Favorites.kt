@@ -25,7 +25,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -34,7 +33,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.asFlow
-import coil.compose.rememberImagePainter
+import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.foodrecipesapp.R
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_ID
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_NAME
@@ -67,12 +67,11 @@ fun MealItems(meal: Meal, viewModel: HomeViewModel) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
 
-    val painter: Painter = rememberImagePainter(
-        data = meal.strMealThumb,
-        builder = {
-            placeholder(R.drawable.food)
-            error(R.drawable.food)
-        }
+    val painter = rememberAsyncImagePainter(
+        ImageRequest.Builder(LocalContext.current).data(data = meal.strMealThumb)
+            .apply {
+            }
+            .build()
     )
 
 
