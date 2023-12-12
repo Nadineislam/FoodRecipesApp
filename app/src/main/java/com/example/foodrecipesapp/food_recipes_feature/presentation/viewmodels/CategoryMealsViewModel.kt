@@ -24,11 +24,11 @@ class CategoryMealsViewModel @Inject constructor(
 
     fun getMealsByCategory(categoryName: String) = viewModelScope.launch {
         val response = mealsByCategoryUseCase(categoryName)
-        _categoryMeals.value = handleCategoryMealsLiveData(response)
+        _categoryMeals.value = handleCategoryMealsResponse(response)
 
     }
 
-    private fun handleCategoryMealsLiveData(response: Response<MealsByCategoryList>): Resource<MealsByCategoryList> {
+    private fun handleCategoryMealsResponse(response: Response<MealsByCategoryList>): Resource<MealsByCategoryList> {
         if (response.isSuccessful) {
             response.body()?.let { resultResponse ->
                 return Resource.Success(resultResponse)
