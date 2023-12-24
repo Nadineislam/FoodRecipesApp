@@ -10,7 +10,6 @@ import com.example.foodrecipesapp.utils.Resource
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertTrue
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
@@ -46,12 +45,8 @@ class MealsViewModelTest {
 
             viewModel.getMealDetails(id)
 
-            val stateFlow = viewModel.javaClass.getDeclaredField("_mealDetails")
-            stateFlow.isAccessible = true
-            val currentStateFlow = stateFlow.get(viewModel) as MutableStateFlow<*>
-
             assertTrue(
-                (currentStateFlow.value as Resource.Success<*>)
+                (viewModel.mealDetails.value as Resource.Success)
                     .data == mockedResponse.body()
             )
         }
@@ -66,13 +61,9 @@ class MealsViewModelTest {
 
             viewModel.getMealDetails(id)
 
-            val stateFlow = viewModel.javaClass.getDeclaredField("_mealDetails")
-            stateFlow.isAccessible = true
-            val currentStateFlow = stateFlow.get(viewModel) as MutableStateFlow<*>
-
             assertEquals(
                 errorMessage,
-                (currentStateFlow.value as Resource.Error<*>).message
+                (viewModel.mealDetails.value as Resource.Error).message
             )
 
         }

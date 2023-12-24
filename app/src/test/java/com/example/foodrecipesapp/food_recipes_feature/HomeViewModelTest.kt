@@ -1,11 +1,9 @@
 package com.example.foodrecipesapp.food_recipes_feature
 
 import com.example.foodrecipesapp.base.MainCoroutineExt
-import com.example.foodrecipesapp.food_recipes_feature.data.models.Category
 import com.example.foodrecipesapp.food_recipes_feature.data.models.CategoryList
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Meal
 import com.example.foodrecipesapp.food_recipes_feature.data.models.MealList
-import com.example.foodrecipesapp.food_recipes_feature.data.models.MealsByCategory
 import com.example.foodrecipesapp.food_recipes_feature.data.models.MealsByCategoryList
 import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.CategoriesUseCase
 import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.DeleteMealUseCase
@@ -78,14 +76,12 @@ class HomeViewModelTest {
                 strMealThumb = "yourMealThumb",
                 strYoutube = "yourYoutube"
             )
-            val mealList = MealList(listOf(meal))
-            val response = Response.success(mealList)
+            val response = Response.success(MealList(listOf(meal)))
             `when`(randomMealUseCase()).thenReturn(response)
 
             viewModel.getRandomMeal()
 
-            val successState = viewModel.randomMeal.value as Resource.Success
-            assertEquals(meal, successState.data)
+            assertEquals(meal, (viewModel.randomMeal.value as Resource.Success).data)
         }
 
     @Test
@@ -104,15 +100,15 @@ class HomeViewModelTest {
     @Test
     fun `when getPopularMeals is called with success state then the list of meals should be retrieved`() =
         runBlocking {
-            val mealsByCategory = MealsByCategory(idMeal = "1", strMeal = "Meal", strMealThumb = "")
-            val mealsByCategoryList = MealsByCategoryList(meals = listOf(mealsByCategory))
-            val response = Response.success(mealsByCategoryList)
-            `when`(popularMealsUseCase("Seafood")).thenReturn(response)
+            val mockedResponse = Response.success(MealsByCategoryList(meals = listOf()))
+            `when`(popularMealsUseCase("Seafood")).thenReturn(mockedResponse)
 
             viewModel.getPopularMeals()
 
-            val successState = viewModel.popularMeals.value as Resource.Success
-            assertEquals(mealsByCategoryList, successState.data)
+            assertEquals(
+                mockedResponse.body(),
+                (viewModel.popularMeals.value as Resource.Success).data
+            )
         }
 
     @Test
@@ -134,13 +130,15 @@ class HomeViewModelTest {
     @Test
     fun `when getCategories is called with success state then the list of categories should be retrieved`() =
         runBlocking {
-            val categoryList = CategoryList(categories = listOf(Category("1", "Category", "thumb")))
-            val response = Response.success(categoryList)
-            `when`(categoriesUseCase()).thenReturn(response)
+            val mockedResponse = Response.success(CategoryList(categories = listOf()))
+            `when`(categoriesUseCase()).thenReturn(mockedResponse)
 
             viewModel.getCategories()
 
-            assertEquals(categoryList, (viewModel.categories.value as Resource.Success).data)
+            assertEquals(
+                mockedResponse.body(),
+                (viewModel.categories.value as Resource.Success).data
+            )
         }
 
     @Test
@@ -176,13 +174,15 @@ class HomeViewModelTest {
     fun `when searchMeal is called with success state then the list of meals should be retrieved`() =
         runBlocking {
             val searchQuery = "query"
-            val mealList = MealList(meals = listOf(Meal("1", "Meal", "", "", "", "", "")))
-            val response = Response.success(mealList)
-            `when`(searchMealUseCase(searchQuery)).thenReturn(response)
+            val mockedResponse = Response.success(MealList(meals = listOf()))
+            `when`(searchMealUseCase(searchQuery)).thenReturn(mockedResponse)
 
             viewModel.searchMeal(searchQuery)
 
-            assertEquals(mealList, (viewModel.searchMeal.value as Resource.Success).data)
+            assertEquals(
+                mockedResponse.body(),
+                (viewModel.searchMeal.value as Resource.Success).data
+            )
         }
 
     @Test

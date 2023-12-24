@@ -7,7 +7,6 @@ import com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels.C
 import com.example.foodrecipesapp.utils.Resource
 import junit.framework.TestCase.assertEquals
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
@@ -35,24 +34,16 @@ class CategoryMealsViewModelTest {
     fun `when getMealsByCategory is called with success state then the list of meals should be retrieved`() =
         runBlocking {
             val categoryName = "YourCategoryName"
-            val mockedResponse = MealsByCategoryList(listOf(/* mocked meals */))
-            val successResponse = Response.success(mockedResponse)
+            val mockedResponse = Response.success(MealsByCategoryList(listOf()))
 
-            `when`(mealsByCategoryUseCase.invoke(categoryName)).thenReturn(successResponse)
+            `when`(mealsByCategoryUseCase.invoke(categoryName)).thenReturn(mockedResponse)
 
             viewModel.getMealsByCategory(categoryName)
 
-            val stateFlow = viewModel.javaClass.getDeclaredField("_categoryMeals")
-            stateFlow.isAccessible = true
-            val currentStateFlow =
-                stateFlow.get(viewModel) as MutableStateFlow<*>
-
             assertEquals(
-                mockedResponse, (currentStateFlow.value as Resource.Success<*>)
+                mockedResponse.body(), (viewModel.categoryMeals.value as Resource.Success)
                     .data
             )
-
-
         }
 
     @Test
@@ -60,18 +51,13 @@ class CategoryMealsViewModelTest {
         runBlocking {
             val categoryName = "YourCategoryName"
             val errorMessage = "Response.error()"
-            val errorResponseBody = errorMessage.toResponseBody()
-            val errorResponse = Response.error<MealsByCategoryList>(404, errorResponseBody)
+            val errorResponse =
+                Response.error<MealsByCategoryList>(404, errorMessage.toResponseBody())
 
             `when`(mealsByCategoryUseCase.invoke(categoryName)).thenReturn(errorResponse)
 
             viewModel.getMealsByCategory(categoryName)
 
-            val stateFlow = viewModel.javaClass.getDeclaredField("_categoryMeals")
-            stateFlow.isAccessible = true
-            val currentStateFlow =
-                stateFlow.get(viewModel) as MutableStateFlow<*>
-
-            assertEquals(errorMessage, (currentStateFlow.value as Resource.Error<*>).message)
+            assertEquals(errorMessage, (viewModel.categoryMeals.value as Resource.Error).message)
         }
 }
