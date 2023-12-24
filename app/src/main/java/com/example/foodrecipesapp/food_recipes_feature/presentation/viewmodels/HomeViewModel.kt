@@ -52,7 +52,7 @@ class HomeViewModel @Inject constructor(
         getCategories()
     }
 
-    private fun getRandomMeal() = viewModelScope.launch {
+    fun getRandomMeal() = viewModelScope.launch {
         val response = randomMealUseCase()
         if (response.isSuccessful) {
             val mealList = response.body()
@@ -65,7 +65,7 @@ class HomeViewModel @Inject constructor(
 
     }
 
-    private fun getCategories() = viewModelScope.launch {
+     fun getCategories() = viewModelScope.launch {
         val response = categoriesUseCase()
         _categories.value = handleCategoriesResponse(response)
     }
@@ -79,7 +79,7 @@ class HomeViewModel @Inject constructor(
         return Resource.Error(response.message())
     }
 
-    private fun getPopularMeals() = viewModelScope.launch {
+     fun getPopularMeals() = viewModelScope.launch {
         val response = popularMealsUseCase("Seafood")
         _popularMeals.value = handlePopularMealsResponse(response)
     }
