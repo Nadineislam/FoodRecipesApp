@@ -55,6 +55,9 @@ import com.example.foodrecipesapp.food_recipes_feature.presentation.activities.C
 import com.example.foodrecipesapp.food_recipes_feature.presentation.activities.MealDetails
 import com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels.HomeViewModel
 import com.example.foodrecipesapp.ui.theme.Accent
+import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_ID
+import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_NAME
+import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_THUMB
 import com.example.foodrecipesapp.utils.Resource
 
 @Composable
@@ -254,9 +257,9 @@ fun PopularMealList(mealThumbs: List<MealsByCategory>) {
                         .width(180.dp)
                         .clickable {
                             val intent = Intent(context, MealDetails::class.java)
-                            intent.putExtra("MEAL_ID", meal.idMeal)
-                            intent.putExtra("MEAL_NAME", meal.strMeal)
-                            intent.putExtra("MEAL_THUMB", meal.strMealThumb)
+                            intent.putExtra(MEAL_ID, meal.idMeal)
+                            intent.putExtra(MEAL_NAME, meal.strMeal)
+                            intent.putExtra(MEAL_THUMB, meal.strMealThumb)
                             context.startActivity(intent)
                         }
                 ) {
@@ -286,9 +289,9 @@ fun RandomMeal(meal: Meal) {
             .padding(12.dp)
             .clickable {
                 val intent = Intent(context, MealDetails::class.java)
-                intent.putExtra("MEAL_ID", meal.idMeal)
-                intent.putExtra("MEAL_NAME", meal.strMeal)
-                intent.putExtra("MEAL_THUMB", meal.strMealThumb)
+                intent.putExtra(MEAL_ID, meal.idMeal)
+                intent.putExtra(MEAL_NAME, meal.strMeal)
+                intent.putExtra(MEAL_THUMB, meal.strMealThumb)
                 context.startActivity(intent)
             }
     ) {

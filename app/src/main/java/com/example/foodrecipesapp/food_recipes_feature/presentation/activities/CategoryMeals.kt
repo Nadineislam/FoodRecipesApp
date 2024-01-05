@@ -45,6 +45,7 @@ import com.example.foodrecipesapp.utils.Resource
 import com.example.foodrecipesapp.food_recipes_feature.data.models.MealsByCategory
 import com.example.foodrecipesapp.food_recipes_feature.presentation.activities.ui.theme.FoodRecipesAppTheme
 import com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels.CategoryMealsViewModel
+import com.example.foodrecipesapp.utils.Constants.Companion.CATEGORY_NAME
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -54,7 +55,7 @@ class CategoryMeals : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         val intent = intent
-        categoryName = intent.getStringExtra("CATEGORY_NAME") ?: ""
+        categoryName = intent.getStringExtra(CATEGORY_NAME) ?: ""
         categoryMealsViewModel.getMealsByCategory(categoryName)
         setContent {
             FoodRecipesAppTheme {
