@@ -22,7 +22,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -35,6 +34,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.rememberAsyncImagePainter
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_ID
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_NAME
@@ -48,7 +48,7 @@ import com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels.H
 @Composable
 fun SearchScreen(viewModel: HomeViewModel) {
     val searchQuery = remember { mutableStateOf("") }
-    val searchResult = viewModel.searchMeal.collectAsState()
+    val searchResult = viewModel.searchMeal.collectAsStateWithLifecycle()
 
     Column(
         modifier = Modifier
