@@ -118,7 +118,7 @@ fun GetPopularMeals(viewModel: HomeViewModel) {
         }
 
         is Resource.Error -> {
-            val message = resource.message ?: "Error fetching news"
+            val message = resource.message ?: "Error fetching meals"
             Toast.makeText(LocalContext.current, message, Toast.LENGTH_LONG)
                 .show()
         }

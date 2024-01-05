@@ -58,7 +58,6 @@ class CategoryMeals : ComponentActivity() {
         categoryMealsViewModel.getMealsByCategory(categoryName)
         setContent {
             FoodRecipesAppTheme {
-                // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -131,8 +130,8 @@ fun CategoryMealsItems(mealsByCategory: List<MealsByCategory>) {
                         val painter: Painter = rememberImagePainter(
                             data = category.strMealThumb,
                             builder = {
-                                placeholder(R.drawable.food) // Optional: Add a placeholder drawable while loading
-                                error(R.drawable.food) // Optional: Add an error drawable if the image fails to load
+                                placeholder(R.drawable.food)
+                                error(R.drawable.food)
                             }
                         )
                         Image(
