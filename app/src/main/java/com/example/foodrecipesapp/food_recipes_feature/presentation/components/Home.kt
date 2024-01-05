@@ -47,7 +47,7 @@ import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.foodrecipesapp.R
 import com.example.foodrecipesapp.utils.Constants.Companion.CATEGORY_NAME
-import com.example.foodrecipesapp.utils.Resource
+
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Category
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Meal
 import com.example.foodrecipesapp.food_recipes_feature.data.models.MealsByCategory
@@ -55,6 +55,7 @@ import com.example.foodrecipesapp.food_recipes_feature.presentation.activities.C
 import com.example.foodrecipesapp.food_recipes_feature.presentation.activities.MealDetails
 import com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels.HomeViewModel
 import com.example.foodrecipesapp.ui.theme.Accent
+import com.example.foodrecipesapp.utils.Resource
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
