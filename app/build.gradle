@@ -121,7 +121,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.0'
 
     androidTestImplementation "androidx.test.ext:junit:1.1.5"
-    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2' // Replace with the latest version
+    testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.5.2'
     testImplementation "org.mockito:mockito-inline:3.11.2"
 
 
