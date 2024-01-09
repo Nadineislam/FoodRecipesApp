@@ -32,7 +32,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -42,12 +41,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
-import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.foodrecipesapp.R
 import com.example.foodrecipesapp.utils.Constants.Companion.CATEGORY_NAME
-
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Category
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Meal
 import com.example.foodrecipesapp.food_recipes_feature.data.models.MealsByCategory
@@ -217,15 +215,8 @@ fun CategoriesMeal(categories: List<Category>) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        val painter: Painter = rememberImagePainter(
-                            data = category.strCategoryThumb,
-                            builder = {
-                                placeholder(R.drawable.food)
-                                error(R.drawable.food)
-                            }
-                        )
-                        Image(
-                            painter = painter,
+                        AsyncImage(
+                            model = category.strCategoryThumb,
                             contentDescription = "food",
                             contentScale = ContentScale.Crop
                         )

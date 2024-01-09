@@ -6,7 +6,6 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -31,13 +30,11 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import coil.compose.rememberImagePainter
-import com.example.foodrecipesapp.R
+import coil.compose.AsyncImage
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_ID
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_NAME
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_THUMB
@@ -128,15 +125,8 @@ fun CategoryMealsItems(mealsByCategory: List<MealsByCategory>) {
                         horizontalAlignment = Alignment.CenterHorizontally,
                         verticalArrangement = Arrangement.Center
                     ) {
-                        val painter: Painter = rememberImagePainter(
-                            data = category.strMealThumb,
-                            builder = {
-                                placeholder(R.drawable.food)
-                                error(R.drawable.food)
-                            }
-                        )
-                        Image(
-                            painter = painter,
+                        AsyncImage(
+                            model = category.strMealThumb,
                             contentDescription = "food",
                             contentScale = ContentScale.Crop
                         )
