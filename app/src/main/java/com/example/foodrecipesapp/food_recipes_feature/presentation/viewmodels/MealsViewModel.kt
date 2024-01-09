@@ -2,6 +2,7 @@ package com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.foodrecipesapp.core.handleResponse
 import com.example.foodrecipesapp.utils.Resource
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Meal
 import com.example.foodrecipesapp.food_recipes_feature.data.models.MealList
@@ -11,7 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,16 +25,7 @@ class MealsViewModel @Inject constructor(
 
     fun getMealDetails(id: String) = viewModelScope.launch {
         val response = mealDetailsUseCase(id)
-        _mealDetails.value = handleMealDetailsResponse(response)
-    }
-
-    private fun handleMealDetailsResponse(response: Response<MealList>): Resource<MealList> {
-        if (response.isSuccessful) {
-            response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
-            }
-        }
-        return Resource.Error(response.message())
+        _mealDetails.value = handleResponse(response)
     }
 
     fun upsertMeal(meal: Meal) {

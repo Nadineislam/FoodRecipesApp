@@ -3,6 +3,7 @@ package com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.foodrecipesapp.core.handleResponse
 import com.example.foodrecipesapp.utils.Resource
 import com.example.foodrecipesapp.food_recipes_feature.data.models.CategoryList
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Meal
@@ -18,7 +19,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import retrofit2.Response
 import javax.inject.Inject
 
 @HiltViewModel
@@ -65,46 +65,19 @@ class HomeViewModel @Inject constructor(
 
     }
 
-     fun getCategories() = viewModelScope.launch {
+    fun getCategories() = viewModelScope.launch {
         val response = categoriesUseCase()
-        _categories.value = handleCategoriesResponse(response)
+        _categories.value = handleResponse(response)
     }
 
-    private fun handleCategoriesResponse(response: Response<CategoryList>): Resource<CategoryList> {
-        if (response.isSuccessful) {
-            response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
-            }
-        }
-        return Resource.Error(response.message())
-    }
-
-     fun getPopularMeals() = viewModelScope.launch {
+    fun getPopularMeals() = viewModelScope.launch {
         val response = popularMealsUseCase("Seafood")
-        _popularMeals.value = handlePopularMealsResponse(response)
-    }
-
-    private fun handlePopularMealsResponse(response: Response<MealsByCategoryList>): Resource<MealsByCategoryList> {
-        if (response.isSuccessful) {
-            response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
-            }
-        }
-        return Resource.Error(response.message())
+        _popularMeals.value = handleResponse(response)
     }
 
     fun searchMeal(searchQuery: String) = viewModelScope.launch {
         val response = searchMealUseCase(searchQuery)
-        _searchMeal.value = handleSearchMealResponse(response)
-    }
-
-    private fun handleSearchMealResponse(response: Response<MealList>): Resource<MealList> {
-        if (response.isSuccessful) {
-            response.body()?.let { resultResponse ->
-                return Resource.Success(resultResponse)
-            }
-        }
-        return Resource.Error(response.message())
+        _searchMeal.value = handleResponse(response)
     }
 
     fun deleteMeal(meal: Meal) {
