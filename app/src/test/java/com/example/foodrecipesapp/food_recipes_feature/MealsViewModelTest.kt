@@ -41,7 +41,7 @@ class MealsViewModelTest {
         runBlocking {
             val id = "mealId"
             val mockedResponse = Response.success(MealList(listOf()))
-            `when`(mealDetailsUseCase.invoke(id)).thenReturn(mockedResponse)
+            `when`(mealDetailsUseCase(id)).thenReturn(mockedResponse)
 
             viewModel.getMealDetails(id)
 
@@ -57,7 +57,7 @@ class MealsViewModelTest {
             val id = "mealId"
             val errorMessage = "Response.error()"
             val mockedResponse = Response.error<MealList>(400, errorMessage.toResponseBody(null))
-            `when`(mealDetailsUseCase.invoke(id)).thenReturn(mockedResponse)
+            `when`(mealDetailsUseCase(id)).thenReturn(mockedResponse)
 
             viewModel.getMealDetails(id)
 

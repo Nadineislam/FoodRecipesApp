@@ -36,7 +36,7 @@ class CategoryMealsViewModelTest {
             val categoryName = "YourCategoryName"
             val mockedResponse = Response.success(MealsByCategoryList(listOf()))
 
-            `when`(mealsByCategoryUseCase.invoke(categoryName)).thenReturn(mockedResponse)
+            `when`(mealsByCategoryUseCase(categoryName)).thenReturn(mockedResponse)
 
             viewModel.getMealsByCategory(categoryName)
 
@@ -54,7 +54,7 @@ class CategoryMealsViewModelTest {
             val errorResponse =
                 Response.error<MealsByCategoryList>(404, errorMessage.toResponseBody())
 
-            `when`(mealsByCategoryUseCase.invoke(categoryName)).thenReturn(errorResponse)
+            `when`(mealsByCategoryUseCase(categoryName)).thenReturn(errorResponse)
 
             viewModel.getMealsByCategory(categoryName)
 
