@@ -23,3 +23,5 @@ Food App has many meals recipes and instructions and you can know the country wh
 * Dagger hilt : For injecting the required dependencies. <br />
 
 * Jetpack Compose : For representing UI. <br />
+
+* Unit Testing : For validating individual components of code, ensuring functionality, detecting bugs early, and maintaining code quality. <br />
