@@ -18,7 +18,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -41,10 +40,10 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.rememberAsyncImagePainter
 import com.example.foodrecipesapp.R
+import com.example.foodrecipesapp.core.GetResourceList
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_ID
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_NAME
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_THUMB
-import com.example.foodrecipesapp.utils.Resource
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Meal
 import com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels.MealsViewModel
 import com.example.foodrecipesapp.ui.theme.FoodRecipesAppTheme
@@ -80,36 +79,21 @@ var savedMeal: Meal? = null
 
 @Composable
 fun GetMealsDetails(mealName: String, mealThumb: String, viewModel: MealsViewModel) {
-    val mealDetails by viewModel.mealDetails.collectAsStateWithLifecycle()
-    when (val resource = mealDetails) {
-        is Resource.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        }
-
-        is Resource.Success -> {
-            val mealList = resource.data
-            savedMeal = mealList?.meals?.firstOrNull()
-            MealScreen(
-                mealName = mealName,
-                mealThumb = mealThumb,
-                categoryName = savedMeal?.strCategory.toString(),
-                areaName = savedMeal?.strArea.toString(),
-                instructionsName = savedMeal?.strInstructions.toString(),
-                youtubeLink = savedMeal?.strYoutube.toString(),
-                viewModel=viewModel
-            )
-        }
-
-        is Resource.Error -> {
-            val message = resource.message ?: "Error fetching meal"
-            Toast.makeText(LocalContext.current, message, Toast.LENGTH_LONG)
-                .show()
-        }
+    val mealDetailsState by viewModel.mealDetails.collectAsStateWithLifecycle()
+    GetResourceList(
+        resourceState = mealDetailsState,
+        emptyListMessage = "Error fetching meal"
+    ) { mealList ->
+        savedMeal = mealList?.meals?.firstOrNull()
+        MealScreen(
+            mealName = mealName,
+            mealThumb = mealThumb,
+            categoryName = savedMeal?.strCategory.toString(),
+            areaName = savedMeal?.strArea.toString(),
+            instructionsName = savedMeal?.strInstructions.toString(),
+            youtubeLink = savedMeal?.strYoutube.toString(),
+            viewModel = viewModel
+        )
     }
 
 }
@@ -121,10 +105,10 @@ fun MealScreen(
     categoryName: String,
     areaName: String,
     instructionsName: String,
-    youtubeLink:String,
+    youtubeLink: String,
     viewModel: MealsViewModel
 ) {
-    val context= LocalContext.current
+    val context = LocalContext.current
     Box(modifier = Modifier.fillMaxSize()) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             item {
@@ -157,7 +141,7 @@ fun MealScreen(
                                 Toast.makeText(context, "Meal Saved", Toast.LENGTH_LONG)
                                     .show()
                             }
-                           },
+                        },
                         modifier = Modifier
                             .align(Alignment.BottomEnd)
                             .padding(5.dp)

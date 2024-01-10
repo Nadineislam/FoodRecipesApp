@@ -2,7 +2,6 @@ package com.example.foodrecipesapp.food_recipes_feature.presentation.activities
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -21,7 +20,6 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -35,10 +33,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.AsyncImage
+import com.example.foodrecipesapp.core.GetResourceList
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_ID
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_NAME
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_THUMB
-import com.example.foodrecipesapp.utils.Resource
 import com.example.foodrecipesapp.food_recipes_feature.data.models.MealsByCategory
 import com.example.foodrecipesapp.food_recipes_feature.presentation.activities.ui.theme.FoodRecipesAppTheme
 import com.example.foodrecipesapp.food_recipes_feature.presentation.viewmodels.CategoryMealsViewModel
@@ -69,27 +67,12 @@ class CategoryMeals : ComponentActivity() {
 
 @Composable
 fun GetCategoriesMealsItems(viewModel: CategoryMealsViewModel) {
-    val categoryMeals by viewModel.categoryMeals.collectAsStateWithLifecycle()
-    when (val resource = categoryMeals) {
-        is Resource.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        }
-
-        is Resource.Success -> {
-            val meals = resource.data?.meals
-            CategoryMealsItems(mealsByCategory = meals ?: emptyList())
-        }
-
-        is Resource.Error -> {
-            val message = resource.message ?: "Error fetching meal"
-            Toast.makeText(LocalContext.current, message, Toast.LENGTH_LONG)
-                .show()
-        }
+    val categoryMealsState by viewModel.categoryMeals.collectAsStateWithLifecycle()
+    GetResourceList(
+        resourceState = categoryMealsState,
+        emptyListMessage = "Error fetching people"
+    ) { mealsList ->
+        CategoryMealsItems(mealsByCategory = mealsList?.meals ?: emptyList())
     }
 }
 

@@ -1,7 +1,6 @@
 package com.example.foodrecipesapp.food_recipes_feature.presentation.components
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -25,7 +24,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,6 +43,7 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.foodrecipesapp.R
+import com.example.foodrecipesapp.core.GetResourceList
 import com.example.foodrecipesapp.utils.Constants.Companion.CATEGORY_NAME
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Category
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Meal
@@ -56,7 +55,6 @@ import com.example.foodrecipesapp.ui.theme.Accent
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_ID
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_NAME
 import com.example.foodrecipesapp.utils.Constants.Companion.MEAL_THUMB
-import com.example.foodrecipesapp.utils.Resource
 
 @Composable
 fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
@@ -76,53 +74,24 @@ fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
 
 @Composable
 fun GetCategoriesMeal(viewModel: HomeViewModel) {
-    val categoryMeals by viewModel.categories.collectAsStateWithLifecycle()
-    when (val resource = categoryMeals) {
-        is Resource.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        }
-
-        is Resource.Success -> {
-            val categories = resource.data?.categories
-            CategoriesMeal(categories = categories ?: emptyList())
-        }
-
-        is Resource.Error -> {
-            val message = resource.message ?: "Error fetching meal"
-            Toast.makeText(LocalContext.current, message, Toast.LENGTH_LONG)
-                .show()
-        }
+    val categoryMealsState by viewModel.categories.collectAsStateWithLifecycle()
+    GetResourceList(
+        resourceState = categoryMealsState,
+        emptyListMessage = "Error fetching people"
+    ) { categories ->
+        CategoriesMeal(categories = categories?.categories ?: emptyList())
     }
 }
+
 
 @Composable
 fun GetPopularMeals(viewModel: HomeViewModel) {
     val popularMealsState by viewModel.popularMeals.collectAsStateWithLifecycle()
-    when (val resource = popularMealsState) {
-        is Resource.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-        }
-
-        is Resource.Success -> {
-            val meals = resource.data?.meals
-            PopularMealList(mealThumbs = meals ?: emptyList())
-        }
-
-        is Resource.Error -> {
-            val message = resource.message ?: "Error fetching meals"
-            Toast.makeText(LocalContext.current, message, Toast.LENGTH_LONG)
-                .show()
-        }
+    GetResourceList(
+        resourceState = popularMealsState,
+        emptyListMessage = "Error fetching people"
+    ) { meals ->
+        PopularMealList(mealThumbs = meals?.meals ?: emptyList())
     }
 }
 
@@ -160,28 +129,14 @@ fun TitleText(text: String) {
 
 @Composable
 fun GetRandomMeal(viewModel: HomeViewModel) {
-    val randomMeal = viewModel.randomMeal.collectAsStateWithLifecycle()
-    when (val resource = randomMeal.value) {
-        is Resource.Success -> {
-            val meal = resource.data
-            RandomMeal(meal = meal!!)
-        }
-
-        is Resource.Error -> {
-            val message = resource.message ?: "Error fetching meal"
-            Toast.makeText(LocalContext.current, message, Toast.LENGTH_LONG)
-                .show()
-        }
-
-        is Resource.Loading -> {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ) {
-                CircularProgressIndicator()
-            }
-
-        }
+    val randomMealState = viewModel.randomMeal.collectAsStateWithLifecycle()
+    GetResourceList(
+        resourceState = randomMealState.value,
+        emptyListMessage = "Error fetching people"
+    ) { meal ->
+        RandomMeal(
+            meal = meal ?: Meal("", null, "Default Category", null, null, null, "")
+        )
     }
 }
 
