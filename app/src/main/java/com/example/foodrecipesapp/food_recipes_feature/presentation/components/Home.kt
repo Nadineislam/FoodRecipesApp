@@ -43,7 +43,6 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.foodrecipesapp.R
-import com.example.foodrecipesapp.core.GetResourceList
 import com.example.foodrecipesapp.utils.Constants.Companion.CATEGORY_NAME
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Category
 import com.example.foodrecipesapp.food_recipes_feature.data.models.Meal

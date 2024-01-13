@@ -1,4 +1,4 @@
-package com.example.foodrecipesapp.core
+package com.example.foodrecipesapp.food_recipes_feature.presentation.components
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
