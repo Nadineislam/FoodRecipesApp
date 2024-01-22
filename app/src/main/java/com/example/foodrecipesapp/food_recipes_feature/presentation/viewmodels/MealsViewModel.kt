@@ -10,7 +10,7 @@ import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.MealDetai
 import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.UpsertMealUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class MealsViewModel @Inject constructor(
 ) : ViewModel() {
     private val _mealDetails: MutableStateFlow<Resource<MealList>> =
         MutableStateFlow(Resource.Loading())
-    val mealDetails: StateFlow<Resource<MealList>> = _mealDetails
+    val mealDetails = _mealDetails.asStateFlow()
 
     fun getMealDetails(id: String) = viewModelScope.launch {
         val response = mealDetailsUseCase(id)

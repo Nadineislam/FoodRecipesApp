@@ -8,7 +8,7 @@ import com.example.foodrecipesapp.food_recipes_feature.data.models.MealsByCatego
 import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.MealsByCategoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +19,7 @@ class CategoryMealsViewModel @Inject constructor(
     ViewModel() {
     private val _categoryMeals: MutableStateFlow<Resource<MealsByCategoryList>> =
         MutableStateFlow(Resource.Loading())
-    val categoryMeals: StateFlow<Resource<MealsByCategoryList>> = _categoryMeals
+    val categoryMeals = _categoryMeals.asStateFlow()
 
 
     fun getMealsByCategory(categoryName: String) = viewModelScope.launch {

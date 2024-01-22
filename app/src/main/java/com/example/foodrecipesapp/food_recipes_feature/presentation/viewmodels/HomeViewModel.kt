@@ -17,7 +17,7 @@ import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.RandomMea
 import com.example.foodrecipesapp.food_recipes_feature.domain.use_case.SearchMealUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,20 +31,20 @@ class HomeViewModel @Inject constructor(
     private val deleteMealUseCase: DeleteMealUseCase
 ) : ViewModel() {
     private val _randomMeal: MutableStateFlow<Resource<Meal>> = MutableStateFlow(Resource.Loading())
-    val randomMeal: StateFlow<Resource<Meal>> = _randomMeal
+    val randomMeal = _randomMeal.asStateFlow()
 
     private val _popularMeals: MutableStateFlow<Resource<MealsByCategoryList>> =
         MutableStateFlow(Resource.Loading())
-    val popularMeals: StateFlow<Resource<MealsByCategoryList>> = _popularMeals
+    val popularMeals = _popularMeals.asStateFlow()
 
     private val _categories: MutableStateFlow<Resource<CategoryList>> =
         MutableStateFlow(Resource.Loading())
-    val categories: StateFlow<Resource<CategoryList>> = _categories
+    val categories = _categories.asStateFlow()
 
     private var favoritesMealsLiveData = mealsUseCase()
 
     private val _searchMeal = MutableStateFlow<Resource<MealList>>(Resource.Loading())
-    val searchMeal: StateFlow<Resource<MealList>> = _searchMeal
+    val searchMeal = _searchMeal.asStateFlow()
 
     init {
         getRandomMeal()
