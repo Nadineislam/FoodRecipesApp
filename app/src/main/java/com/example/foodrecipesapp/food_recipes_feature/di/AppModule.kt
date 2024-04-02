@@ -6,7 +6,11 @@ import com.example.foodrecipesapp.utils.Constants.Companion.BASE_URL
 import com.example.foodrecipesapp.food_recipes_feature.data.api.ApiService
 import com.example.foodrecipesapp.food_recipes_feature.data.db.MealDao
 import com.example.foodrecipesapp.food_recipes_feature.data.db.MealDatabase
+import com.example.foodrecipesapp.food_recipes_feature.data.repository.CategoryMealsRepositoryImpl
+import com.example.foodrecipesapp.food_recipes_feature.data.repository.HomeRepositoryImpl
 import com.example.foodrecipesapp.food_recipes_feature.data.repository.MealsRepositoryImpl
+import com.example.foodrecipesapp.food_recipes_feature.domain.repository.CategoryMealsRepository
+import com.example.foodrecipesapp.food_recipes_feature.domain.repository.HomeRepository
 import com.example.foodrecipesapp.food_recipes_feature.domain.repository.MealsRepository
 import dagger.Module
 import dagger.Provides
@@ -24,9 +28,21 @@ import javax.inject.Singleton
 object AppModule {
     @Provides
     @Singleton
-    fun provideMealsRepository(api:ApiService,db:MealDatabase):MealsRepository{
-        return MealsRepositoryImpl(db.mealDao(),api)
+    fun provideHomeRepository(api: ApiService, db: MealDatabase): HomeRepository {
+        return HomeRepositoryImpl(db.mealDao(), api)
     }
+    @Provides
+    @Singleton
+    fun provideMealsRepository(api: ApiService, db: MealDatabase): MealsRepository {
+        return MealsRepositoryImpl(db.mealDao(), api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCategoryMealsRepository(api: ApiService): CategoryMealsRepository {
+        return CategoryMealsRepositoryImpl(api)
+    }
+
     @Provides
     @Singleton
     fun providesDatabase(@ApplicationContext context: Context): MealDatabase =
